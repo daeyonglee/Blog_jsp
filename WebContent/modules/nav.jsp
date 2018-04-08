@@ -12,11 +12,11 @@
           <span onclick="document.getElementById('login').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright w3-text-black" title="Close Modal">&times;</span>
         </div>
         <div class="w3-container">
-          <form class="w3-container" action="login.do" method="get">
+          <form class="w3-container" action="<%=application.getContextPath() %>/login.do" method="get">
             <div class="w3-left-align w3-text-black"><p>ID</p></div>
-            <p><input class="w3-input" type="text"></p>
+            <p><input class="w3-input" type="text" name="id"></p>
             <div class="w3-left-align w3-text-black"><p>PASSWORD</p></div>
-            <p><input class="w3-input" type="password"></p>
+            <p><input class="w3-input" type="password" name="pwd"></p>
             <p><button class="w3-button w3-border w3-hover-indigo w3-text-black" style="width:100%;">로그인</button></p>
             <p class="w3-text-blue w3-hover-indigo" onclick="window.location.href='user/search.jsp'">아이디/비밀번호 찾기</p>
             <p class="w3-text-blue w3-hover-indigo" onclick="window.location.href='user/join.jsp'">회원가입</p>

@@ -4,8 +4,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="css/w3.css">
-<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="<%=application.getContextPath()%>/css/w3.css">
+<link rel="stylesheet" href="<%=application.getContextPath()%>/css/common.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <title>index</title>
 </head>
