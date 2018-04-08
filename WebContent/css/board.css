@@ -1,0 +1,27 @@
+.board-search {
+	padding: 8px;
+  display: inline;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  width: 20%;
+}
+
+.board-select {
+    padding: 9px 0;
+    width: 10%;
+    border: none;
+    border-bottom: 1px solid #ccc;
+}
+
+.board-regist-btn {
+	 margin-top: 5px;
+   float: right;
+}
+
+.board-regist-ta {
+	width: 100%;
+}
+
+.board-detail-tt {
+	text-decoration: none;
+}
