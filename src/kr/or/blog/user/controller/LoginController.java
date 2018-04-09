@@ -38,7 +38,7 @@ public class LoginController extends HttpServlet {
 			Cookie cookie = new Cookie("id", id);
 			cookie.setPath("/");
 			response.addCookie(cookie);
-			response.sendRedirect(getServletContext().getContextPath()+url);
+			response.sendRedirect(getServletContext().getContextPath()+"/index.jsp");
 		} else {
 			response.sendRedirect(getServletContext().getContextPath()+"/user/login.jsp");
 		}

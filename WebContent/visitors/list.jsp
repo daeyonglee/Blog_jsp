@@ -1,3 +1,5 @@
+<%@page import="kr.or.blog.visitors.domain.GuestBook"%>
+<%@page import="java.util.List"%>
 <%@page import="kr.or.blog.user.domain.User"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
@@ -12,6 +14,9 @@
       }
     }
   }
+%>
+<%
+	List<GuestBook> list = (List<GuestBook>)request.getAttribute("list");
 %>
 <!DOCTYPE html>
 <html>
@@ -50,24 +55,28 @@
     </form>
   </div>
   <hr>
-  <div class="w3-card-4 w3-margin w3-white">
-    
-    <div class="w3-container">
-      <h3><b>TITLE HEADING</b></h3>
-      <h5>Title description, <span class="w3-opacity">April 7, 2014</span></h5>
-    </div>
-
-    <div class="w3-container">
-      <p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed
-        tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-      <div class="w3-row">
-        <div class="w3-col m12 w3-hide-small">
-          <p><span class="w3-padding-large w3-right"><b>Comments  </b> <span class="w3-tag">0</span></span></p>
-        </div>
-      </div>
-    </div>
-    
-  </div>
+  <%
+  	for (GuestBook guestBook : list) {
+  %>
+	  <div class="w3-card-4 w3-margin w3-white">
+	    
+	    <div class="w3-container">
+	      <h5><span class="w3-opacity"><%=guestBook.getRegdate() %></span></h5>
+	    </div>
+	
+	    <div class="w3-container">
+	      <p><%=guestBook.getContents() %></p>
+	      <div class="w3-row">
+	        <div class="w3-col m12 w3-hide-small">
+	          <p><span class="w3-padding-large w3-right"><b>Comments  </b> <span class="w3-tag">0</span></span></p>
+	        </div>
+	      </div>
+	    </div>
+	    
+	  </div>
+  <%
+  	}
+  %>
   
 </div>
 

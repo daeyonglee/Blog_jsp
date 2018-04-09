@@ -22,7 +22,7 @@ CREATE SEQUENCE guestbook_seq
 
 -- 테스트(더미) 데이터 입력 및 검색
 INSERT INTO guestbook(guestbook_id, user_id, contents)
-VALUES (GUESTBOOK_SEQ.NEXTVAL, 'bangry', '좋은 내용 감사합니다.');
+VALUES (GUESTBOOK_SEQ.NEXTVAL, 'admin', '좋은 내용 감사합니다.');
 
 -- 많은 데이터 입력을 위해 서브쿼리 활용
 INSERT INTO guestbook 
