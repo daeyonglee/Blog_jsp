@@ -1,10 +1,20 @@
 /**
- * 회원가입 관련 자바스크립트 처리
+ * 유저 관련 자바스크립트 처리
  * @author 이대용
  */
 
 window.onload = function () {
 	
+	// 회원가입 유효성 검사
+	chkJoin();
+	
+}
+
+/**
+ * 회원가입 시 유효성 검사를 한다.
+ * @returns
+ */
+function chkJoin() {
 	var elements = document.forms[0].elements;
 
 	for (var x in elements) {
@@ -81,6 +91,20 @@ function chk() {
 		return false;
 	} else {
 		document.getElementsByName('telephone')[0].parentElement.lastElementChild.innerHTML = "";
+	}
+	
+	// ID나 EMAIL이 이미 존재하는 데이터인지 체크
+	for (var x in arrUser) {
+		if (id == arrUser[x].id) {
+			document.getElementsByName('id')[0].focus();
+			document.getElementsByName('id')[0].parentElement.lastElementChild.innerHTML = "already existing ID.";
+			return false;
+		}
+		if (email == arrUser[x].email) {
+			document.getElementsByName('email')[0].focus();
+			document.getElementsByName('email')[0].parentElement.lastElementChild.innerHTML = "already existing EMAIL.";
+			return false;
+		}
 	}
 	
 	return true;

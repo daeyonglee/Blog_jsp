@@ -1,4 +1,14 @@
+<%@page import="kr.or.blog.user.domain.User"%>
+<%@page import="java.util.List"%>
+<%@page import="kr.or.blog.user.dao.JdbcUserDao"%>
+<%@page import="kr.or.blog.common.dao.DaoFactory"%>
+<%@page import="kr.or.blog.user.dao.UserDao"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%
+  // Users 테이블 조회 후 회원가입 시 아이디와 이메일이 존재하는지 체크
+  UserDao dao = (UserDao) DaoFactory.getInstance().getDao(JdbcUserDao.class);
+  List<User> list = dao.listAll();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,8 +18,26 @@
 <link rel="stylesheet" href="../css/w3.css">
 <link rel="stylesheet" href="../css/common.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+<script type="text/javascript">
+	var arrUser = [];
+	<%
+      for (int i=0; i<list.size(); i++) {
+    %>
+      arrUser.push({
+    	  'id': '<%= list.get(i).getId()%>',
+    	  'email': '<%= list.get(i).getEmail()%>'
+      });
+    <%    
+      }
+    %>
+	
+    console.log(arrUser);
+    
+</script>
+
 <!-- javascript -->
-<script type="text/javascript" src="<%=application.getContextPath()%>/js/join.js"></script>
+<script type="text/javascript" src="<%=application.getContextPath()%>/js/user/join.js"></script>
 <title>join</title>
 </head>
 <body class="w3-light-grey">

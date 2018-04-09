@@ -68,8 +68,6 @@ public class JdbcUserDao implements UserDao{
 			
 			count = pstmt.executeUpdate();
 			
-			getQuery(pstmt);
-			
 			con.commit();
 			
 		} catch (Exception e) {
@@ -180,7 +178,7 @@ public class JdbcUserDao implements UserDao{
 	/** 사용자 전체 조회 */
 	public List<User> listAll() throws RuntimeException{
 		
-		String sql = "SELECT ID, NAME, PASSWD, EMAIL FROM USERS";
+		String sql = "SELECT ID, NAME, PASSWD, EMAIL, TELEPHONE FROM USERS";
 		
 		List<User> list = new ArrayList<User>();
 		try {
@@ -256,13 +254,6 @@ public class JdbcUserDao implements UserDao{
 		
 	}
 	
-	private void getQuery(PreparedStatement pstmt) {
-		System.out.println("########################################################");
-		System.out.println("executed QUERY: " + pstmt.toString());
-		System.out.println("########################################################");
-	}
-	
-	
 	private void close(ResultSet rs, PreparedStatement pstmt, Connection con) {
 		try {
 			if (rs != null) rs.close();
@@ -276,12 +267,10 @@ public class JdbcUserDao implements UserDao{
 	
 	public static void main(String[] args) {
 		UserDao dao = (UserDao) DaoFactory.getInstance().getDao(JdbcUserDao.class);
-		
-		try {
-			User user = dao.isMember("bbbb", "6666");
+		dao.create(new User("haejun1", "해준", "1234", "abcde@abcd.com", "010-2345-6789"));
+		List<User> list = dao.listAll();
+		for (User user : list) {
 			System.out.println(user.toString());
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
 		}
 	}
 }

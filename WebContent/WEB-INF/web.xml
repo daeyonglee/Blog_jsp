@@ -14,8 +14,8 @@
     <url-pattern>*</url-pattern>
   </filter-mapping>
   <error-page>
-  	<error-code>500</error-code>
-  	<location>/errors/500.jsp</location>
+    <error-code>500</error-code>
+    <location>/errors/500.jsp</location>
   </error-page>
   <servlet>
     <description></description>
@@ -26,5 +26,25 @@
   <servlet-mapping>
     <servlet-name>LoginController</servlet-name>
     <url-pattern>/login.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>LogoutController</display-name>
+    <servlet-name>LogoutController</servlet-name>
+    <servlet-class>kr.or.blog.user.controller.LogoutController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogoutController</servlet-name>
+    <url-pattern>/logout.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ListController</display-name>
+    <servlet-name>ListController</servlet-name>
+    <servlet-class>kr.or.blog.visitors.controller.ListController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListController</servlet-name>
+    <url-pattern>/visitors/list.do</url-pattern>
   </servlet-mapping>
 </web-app>

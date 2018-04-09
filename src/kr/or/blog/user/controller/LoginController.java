@@ -26,21 +26,19 @@ public class LoginController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String id = request.getParameter("id");
-		String pwd = request.getParameter("pwd");
-		
-		System.out.println("id: " + id);
-		System.out.println("pwd: " + pwd);
+		String passwd = request.getParameter("passwd");
+		String url = request.getParameter("url");
 		
 		// DB연결 후 확인
 		UserDao dao = (UserDao) DaoFactory.getInstance().getDao(JdbcUserDao.class);
 		
-		User user = dao.isMember(id, pwd);
+		User user = dao.isMember(id, passwd);
 		
 		if (user != null) {
 			Cookie cookie = new Cookie("id", id);
 			cookie.setPath("/");
 			response.addCookie(cookie);
-			response.sendRedirect(getServletContext().getContextPath()+"/index.jsp");
+			response.sendRedirect(getServletContext().getContextPath()+url);
 		} else {
 			response.sendRedirect(getServletContext().getContextPath()+"/user/login.jsp");
 		}
