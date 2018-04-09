@@ -42,17 +42,30 @@ public class LoginController extends HttpServlet {
 			response.addCookie(cookie);
 			response.sendRedirect(getServletContext().getContextPath()+"/index.jsp");
 		} else {
-			response.sendRedirect(getServletContext().getContextPath()+"/login/login.jsp");
+			response.sendRedirect(getServletContext().getContextPath()+"/user/login.jsp");
 		}
 		
 		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	/****************************************************************
+	 * 회원가입 처리			                                        *
+	 ****************************************************************/
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String id = request.getParameter("id");
+		String passwd = request.getParameter("passwd");
+		String name = request.getParameter("name");
+		String telephone = request.getParameter("telephone");
+		String email = request.getParameter("email");
+		
+		User user = new User(id, name, passwd, email, telephone);
+		
+		// DB 전송
+		UserDao dao = (UserDao) DaoFactory.getInstance().getDao(JdbcUserDao.class);
+		dao.create(user);
+		
+		// 디비 insert 성공
+		request.getRequestDispatcher(getServletContext().getContextPath()+"/user/success.jsp").forward(request, response);
 	}
-
 }

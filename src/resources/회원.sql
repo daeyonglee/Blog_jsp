@@ -1,83 +1,73 @@
 drop table users;
 
--- »ç¿ëÀÚ Á¤º¸ ÀúÀåÀ» À§ÇÑ Å×ÀÌºí »ı¼º
+-- ì‚¬ìš©ì ì •ë³´ ì €ì¥ì„ ìœ„í•œ í…Œì´ë¸” ìƒì„±
 CREATE TABLE users(
      id         VARCHAR2(8),
-     name       VARCHAR2(20)    NOT NULL,
+     name       VARCHAR2(40)    NOT NULL,
      passwd     VARCHAR2(8)     NOT NULL,
      email      VARCHAR2(50)    NOT NULL,
      telephone  VARCHAR2(30),
-     job        VARCHAR2(20)    NOT NULL,
-     message    VARCHAR2(4000),
+     upddate    DATE DEFAULT sysdate NOT NULL,
      regdate    DATE DEFAULT sysdate NOT NULL
 );
 
--- Å×ÀÌºí º¯°æÀ» ÀÌ¿ëÇÑ Á¦¾à»çÇ× Ãß°¡
+-- í…Œì´ë¸” ë³€ê²½ì„ ì´ìš©í•œ ì œì•½ì‚¬í•­ ì¶”ê°€
 ALTER TABLE users
   ADD(CONSTRAINT users_id_pk    PRIMARY KEY(id),
-      CONSTRAINT users_email_uk UNIQUE(email),
-      CONSTRAINT users_job_ck   CHECK (job in('È¸»ç¿ø', '°­»ç', 'ÇĞ»ı', '±âÅ¸')));
+      CONSTRAINT users_email_uk UNIQUE(email));
   
 desc users;
 
--- Å×½ºÆ®(Dummy) µ¥ÀÌÅÍ ÀÎ¼­Æ®
+-- í…ŒìŠ¤íŠ¸(Dummy) ë°ì´í„° ì¸ì„œíŠ¸
 INSERT INTO users 
             (id, 
              name, 
              passwd,
              email,
-             telephone,
-             job,
-             message) 
-VALUES     ('bangry', 
-            '±è±âÁ¤', 
-            '1111',
-            'bangry313@naver.com',
-            '010-9179-8707',
-            '°­»ç',
-            'Àß ºÎÅ¹ÇôÀ¯....');
+             telephone
+             ) VALUES (
+             'admin', 
+             'ê´€ë¦¬ì', 
+             'admin',
+             'admin@admin.com',
+             '010-0000-0000'
+             );
 
 INSERT INTO users 
             (id, 
              name, 
              passwd,
              email,
-             telephone,
-             job,
-             message) 
-VALUES     ('jisung', 
-            '¹ÚÁö¼º', 
-            '1234',
-            'jisung@korea.com',
-            '010-1111-2222',
-            '±âÅ¸',
-            'Á¦ÀÏ ÁÁ¾ÆÇÏ´Â Ãà±¸¼±¼ö');
+             telephone
+             ) VALUES (
+             'jisung', 
+             'ë°•ì§€ì„±', 
+             '1234',
+             'jisung@korea.com',
+             '010-1111-2222'
+             );
 
 INSERT INTO users 
             (id, 
              name, 
              passwd,
              email,
-             telephone,
-             job,
-             message) 
-VALUES     ('sujin', 
-            'ÇÑ¼öÁø', 
-            '1111',
-            'sujin@korea.com',
-            '010-1111-2222',
-            'ÇĞ»ı',
-            'ÀÌ»Û ÇĞ»ıÀÔ´Ï´Ù.'); 
+             telephone
+            ) VALUES (
+             'sujin', 
+             'í•œìˆ˜ì§„', 
+             '1111',
+             'sujin@korea.com',
+             '010-1111-2222'
+            ); 
 
 commit;
 
--- ÀüÃ¼ Á¶È¸
+-- ì „ì²´ ì¡°íšŒ
 SELECT id, 
        name, 
        passwd,
        email,
        telephone,
-       job,
-       message,
        TO_CHAR(regdate, 'YYYY-MM-DD DAY') regdate 
 FROM   users;

@@ -10,17 +10,20 @@ public class User {
 	private String name;
 	private String passwd;
 	private String email;
-
+	private String telephone;
+	
 	public User() {}
 	
-	public User(String id, String name, String passwd, String email) {
+	public User(String id, String name, String passwd, String email, String telephone) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.passwd = passwd;
 		this.email = email;
+		this.telephone = telephone;
 	}
-	
+
+	// getter/setter
 	public String getId() {
 		return id;
 	}
@@ -45,9 +48,16 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	public String getTelephone() {
+		return telephone;
+	}
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+	// toString()
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", passwd=" + passwd + ", email=" + email + "]";
+		return "User [id=" + id + ", name=" + name + ", passwd=" + passwd + ", email=" + email + ", telephone="
+				+ telephone + "]";
 	}
 }

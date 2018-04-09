@@ -39,10 +39,22 @@ public class JdbcUserDao implements UserDao{
 
 	/** 사용자 등록 
 	 * @throws Exception */
-	public void create(User user) throws RuntimeException{
+	public int create(User user) throws RuntimeException{
 		
-		String sql = "INSERT INTO USERS VALUES (?, ?, ?, ?)";
-		
+		String sql = "INSERT INTO USERS"
+				+ "          ("
+				+ "            id"
+				+ "          , name"
+				+ "          , passwd"
+				+ "          , email"
+				+ "          , telephone"
+				+ "          ) VALUES ("
+				+ "            ?"
+				+ "          , ?"
+				+ "          , ?"
+				+ "          , ?"
+				+ "          , ?      )";
+		int count = 0;
 		try {
 			con = dataSource.getConnection();
 			con.setAutoCommit(false);
@@ -52,11 +64,13 @@ public class JdbcUserDao implements UserDao{
 			pstmt.setString(2, user.getName());
 			pstmt.setString(3, user.getPasswd());
 			pstmt.setString(4, user.getEmail());
+			pstmt.setString(5, user.getTelephone());
 			
-			pstmt.executeUpdate();
+			count = pstmt.executeUpdate();
+			
+			getQuery(pstmt);
 			
 			con.commit();
-			
 			
 		} catch (Exception e) {
 			try {
@@ -66,6 +80,8 @@ public class JdbcUserDao implements UserDao{
 		} finally {
 			close(null, pstmt, con);
 		}
+		
+		return count;
 	}
 	
 	/** 아이디로 사용자 조회 
@@ -240,40 +256,12 @@ public class JdbcUserDao implements UserDao{
 		
 	}
 	
-	public List<Map<String, Object>> employeeList() {
-		
-		String sql = "SELECT E.EMPLOYEE_ID" + 
-					 "     , E.LAST_NAME" + 
-					 "     , D.DEPARTMENT_ID" + 
-					 "     , D.DEPARTMENT_NAME" + 
-					 "  FROM EMPLOYEES E " + 
-					 " INNER JOIN DEPARTMENTS D" + 
-					 "    ON E.DEPARTMENT_ID = D.DEPARTMENT_ID"; 
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-		Map<String, Object> map = null;
-		ResultSetMetaData rsmd = null;
-		try {
-			con   = dataSource.getConnection();
-			pstmt = con.prepareStatement(sql);
-			rs    = pstmt.executeQuery();
-			rsmd = rs.getMetaData();
-			System.out.println(rsmd.getColumnLabel(1) + "\t" + rsmd.getColumnLabel(2) + "\t" + rsmd.getColumnLabel(3) + "\t" + rsmd.getColumnLabel(4));
-			System.out.println("====================================================");
-			while(rs.next()) {
-				map = new HashMap<String, Object>();
-				map.put("user", new User(rs.getString("EMPLOYEE_ID"), rs.getString("LAST_NAME"), null, null));
-				map.put("department_id", rs.getString("DEPARTMENT_ID"));
-				map.put("department_name", rs.getString("DEPARTMENT_NAME"));
-				list.add(map);
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return list;
+	private void getQuery(PreparedStatement pstmt) {
+		System.out.println("########################################################");
+		System.out.println("executed QUERY: " + pstmt.toString());
+		System.out.println("########################################################");
 	}
-
+	
 	
 	private void close(ResultSet rs, PreparedStatement pstmt, Connection con) {
 		try {

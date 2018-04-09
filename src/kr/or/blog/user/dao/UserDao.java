@@ -15,7 +15,7 @@ public interface UserDao {
 	
 	/** 사용자 등록 
 	 * @throws Exception */
-	public void create(User user) throws RuntimeException;
+	public int create(User user) throws RuntimeException;
 	
 	/** 아이디로 사용자 조회 
 	 * @throws SQLException */
@@ -35,7 +35,5 @@ public interface UserDao {
 	
 	/** 사용자 정보 삭제 */
 	public void delete(String id) throws RuntimeException;
-	
-	public List<Map<String, Object>> employeeList();
 }
 

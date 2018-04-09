@@ -1,6 +1,6 @@
 drop table guestbook;
 
--- ╧Ф╦М╥о евюл╨М ╩Щ╪╨
+-- К╟╘К╙┘К║² М┘▄Л²╢К╦■ Л┐²Л└╠
 CREATE TABLE guestbook (
     guestbook_id NUMBER,
     user_id      VARCHAR2(8)    NOT NULL,
@@ -8,23 +8,23 @@ CREATE TABLE guestbook (
     regdate      DATE           DEFAULT SYSDATE NOT NULL
 );
 
--- евюл╨М©║ а╕╬Ю╩Ггв цъ╟║
+-- М┘▄Л²╢К╦■Л≈░ Л═°Л∙╫Л┌╛М∙╜ Л╤■Й╟─
 ALTER TABLE guestbook
     ADD (
         CONSTRAINT guestbook_id_pk PRIMARY KEY(guestbook_id),
         CONSTRAINT guestbook_user_id_fk FOREIGN KEY(user_id)
             REFERENCES users(id));
 
--- ╫цдЖ╫╨ ╩Щ╪╨
+-- Л▀°М──Л┼╓ Л┐²Л└╠
 CREATE SEQUENCE guestbook_seq
     START WITH 1
     NOCYCLE;
 
--- ев╫╨ф╝(╢У╧л) ╣╔юлем ют╥б ╧в ╟к╩Ж
+-- М┘▄Л┼╓М┼╦(К█■К╞╦) К█╟Л²╢М└╟ Л·┘К═╔ К╟▐ Й╡─Л┐┴
 INSERT INTO guestbook(guestbook_id, user_id, contents)
-VALUES (GUESTBOOK_SEQ.NEXTVAL, 'bangry', 'ааю╨ Ё╩©К ╟╗╩Ггу╢о╢ы.');
+VALUES (GUESTBOOK_SEQ.NEXTVAL, 'bangry', 'Л╒▀Л²─ К┌╢Л ╘ Й╟░Л┌╛М∙╘К▀┬К▀╓.');
 
--- ╦╧ю╨ ╣╔юлем ют╥бю╩ ю╖гь ╪╜╨ЙдУ╦╝ х╟©К
+-- К╖▌Л²─ К█╟Л²╢М└╟ Л·┘К═╔Л²└ Л°└М∙╢ Л└°К╦▄Л©╪К╕╛ М≥°Л ╘
 INSERT INTO guestbook 
             (guestbook_id, 
              user_id, 
