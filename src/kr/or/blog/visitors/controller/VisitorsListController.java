@@ -17,7 +17,7 @@ import kr.or.blog.visitors.domain.GuestBook;
 /**
  * Servlet implementation class ListController
  */
-public class ListController extends HttpServlet {
+public class VisitorsListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	/**
@@ -29,7 +29,6 @@ public class ListController extends HttpServlet {
 		// DB에 조회
 		GuestBookDao dao = (GuestBookDao)DaoFactory.getInstance().getDao(JdbcGuestBookDao.class);
 		List<GuestBook> list = dao.listAll();
-		System.out.println(list.size());
 		
 		request.setAttribute("list", list);
 		request.getRequestDispatcher(getServletContext().getContextPath()+"/visitors/list.jsp").forward(request, response);

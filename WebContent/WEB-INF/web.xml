@@ -40,11 +40,31 @@
   <servlet>
     <description></description>
     <display-name>ListController</display-name>
-    <servlet-name>ListController</servlet-name>
-    <servlet-class>kr.or.blog.visitors.controller.ListController</servlet-class>
+    <servlet-name>VisitorsListController</servlet-name>
+    <servlet-class>kr.or.blog.visitors.controller.VisitorsListController</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ListController</servlet-name>
+    <servlet-name>VisitorsListController</servlet-name>
     <url-pattern>/visitors/list.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>BoardListController</display-name>
+    <servlet-name>BoardListController</servlet-name>
+    <servlet-class>kr.or.blog.board.controller.BoardListController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BoardListController</servlet-name>
+    <url-pattern>/board/list.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>BoardRegistController</display-name>
+    <servlet-name>BoardRegistController</servlet-name>
+    <servlet-class>kr.or.blog.board.controller.BoardRegistController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BoardRegistController</servlet-name>
+    <url-pattern>/board/regist.do</url-pattern>
   </servlet-mapping>
 </web-app>

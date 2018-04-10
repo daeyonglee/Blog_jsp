@@ -92,9 +92,9 @@ INSERT INTO article
              order_no) 
 VALUES     (article_id_seq.nextval, 
             1, 
-            'bangry', 
-            'bangry의 신규글 제목입니다.', 
-            'bangry의 신규글 내용입니다.', 
+            'admin', 
+            'admin의 신규글 제목입니다.', 
+            'admin의 신규글 내용입니다.', 
             '127.0.0.1', 
             '1111', 
             article_id_seq.currval, 
@@ -115,9 +115,9 @@ INSERT INTO article
              order_no) 
 VALUES     (article_id_seq.nextval, 
             1, 
-            'gildong', 
-            'gildong의 신규글 제목입니다.', 
-            'gildong의 신규글 내용입니다.', 
+            'sujin', 
+            'sujin의 신규글 제목입니다.', 
+            'sujin의 신규글 내용입니다.', 
             '192.168.0.20', 
             '1111', 
             article_id_seq.currval, 
@@ -176,9 +176,9 @@ INSERT INTO article
              order_no) 
 VALUES      (article_id_seq.nextval, 
              1, 
-             'gildong', 
-             'bangry의 신규글에 대한 gildong의 첫번째 답변글 제목입니다', 
-             'gildong의 첫번째 답변글 내용입니다', 
+             'sujin', 
+             'admin의 신규글에 대한 sujin의 첫번째 답변글 제목입니다', 
+             'sujin의 첫번째 답변글 내용입니다', 
              '192.168.0.150', 
              '1111', 
              1, 
@@ -204,7 +204,7 @@ INSERT INTO article
 VALUES      (article_id_seq.nextval, 
              1, 
              'sujin', 
-             'bangry의 신규글에 대한 sujin의 첫번째 답변글 제목입니다', 
+             'admin의 신규글에 대한 sujin의 첫번째 답변글 제목입니다', 
              'sujin의 첫번째 답변글 내용입니다.', 
              '192.168.0.170', 
              '1111', 
@@ -255,7 +255,7 @@ INSERT INTO article
 VALUES      (article_id_seq.nextval, 
              1, 
              'sujin', 
-             'gildong의 답변글에 대한 sujin의 답변글 제목입니다', 
+             'sujin의 답변글에 대한 sujin의 답변글 제목입니다', 
              'jisung의 답변글 내용입니다.', 
              '192.168.0.150', 
              '1111', 
@@ -309,7 +309,7 @@ INSERT INTO article
         level_no, 
         order_no 
  FROM   article 
- WHERE  writer = 'bangry');
+ WHERE  writer = 'admin');
 
 
 COMMIT;
@@ -350,7 +350,7 @@ FROM   (SELECT CEIL(rownum / 10) request_page,
                 WHERE  board_id = 1 --자유게시글 
                 ORDER  BY group_no DESC, 
                           order_no ASC)) 
-WHERE  request_page = 1; 
+WHERE  request_page = 100; 
 
 
 
@@ -375,7 +375,7 @@ FROM   (SELECT CEIL(rownum / 10) request_page,
                 WHERE  board_id = 1
                     AND subject  LIKE '%신규글%'
                     --AND content LIKE '%답변글%'
-                    --AND writer = 'bangry'
+                    --AND writer = 'admin'
                 ORDER  BY group_no DESC, 
                           order_no ASC)) 
 WHERE  request_page = 1; 
@@ -432,7 +432,7 @@ FROM   (SELECT CEIL(rownum / 10) request_page,
                 FROM   article 
                 WHERE  board_id = 2
                        AND attach_file  LIKE '%.exe%'
-                     --AND writer = 'bangry'
+                     --AND writer = 'admin'
                      --AND subject LIKE '%조은%'
                 ORDER  BY article_id DESC)) 
 WHERE  request_page = 1; 

@@ -14,7 +14,7 @@
 <div class="w3-bar w3-black w3-hide-small">
   <a href="<%=application.getContextPath() %>/index.jsp" class="w3-bar-item w3-button">HOME</a>
   <a href="<%=application.getContextPath() %>/visitors/list.do" class="w3-bar-item w3-button">방명록</a>
-  <a href="<%=application.getContextPath() %>/board/list.jsp" class="w3-bar-item w3-button">자유게시판</a>
+  <a href="<%=application.getContextPath() %>/board/list.do" class="w3-bar-item w3-button">자유게시판</a>
   <a href="<%=application.getContextPath() %>/files/list.jsp" class="w3-bar-item w3-button">자료실</a>
   <%
   	if (user.getId() == null) {
@@ -47,8 +47,8 @@
             <p>
             <button class="w3-button w3-border w3-hover-indigo w3-text-black" style="width: 100%;">로그인</button>
             </p>
-            <p class="w3-text-blue w3-hover-indigo" onclick="window.location.href='user/search.jsp'">아이디/비밀번호 찾기</p>
-            <p class="w3-text-blue w3-hover-indigo" onclick="window.location.href='user/join.jsp'">회원가입</p>
+            <p class="w3-text-blue w3-hover-indigo" onclick="window.location.href='<%=application.getContextPath()%>/user/search.jsp'">아이디/비밀번호 찾기</p>
+            <p class="w3-text-blue w3-hover-indigo" onclick="window.location.href='<%=application.getContextPath()%>/user/join.jsp'">회원가입</p>
           </form>
         </div>
       </div>

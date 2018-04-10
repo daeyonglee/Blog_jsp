@@ -1,10 +1,10 @@
 package kr.or.blog.visitors.domain;
 
 public class GuestBook {
-	int guestbookId;
-	String userId;
-	String contents;
-	String regdate;
+	private int guestbookId;
+	private String userId;
+	private String contents;
+	private String regdate;
 	
 	public GuestBook() {}
 
