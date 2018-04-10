@@ -33,7 +33,7 @@ if (cookies != null) {
   <!-- Blog entry -->
   <div class="w3-card-4 w3-margin w3-white w3-animate-zoom">
     <form class="w3-container w3-card-4" action="<%=application.getContextPath()%>/board/regist.do" method="post">
-      <input type="hidden" name="id" value="<%=id%>">
+      <input type="hidden" name="writer" value="<%=id%>">
       <h2 class="w3-text-red">게시글 작성</h2>
       <hr>
       <p>      
@@ -41,9 +41,8 @@ if (cookies != null) {
         <input class="w3-input w3-border" name="subject" type="text">
       </p>
       <p>      
-        <label class="w3-text-red"><b>작성자</b></label>
-        <input class="w3-input w3-border" name="writer" type="text">
-      </p>
+        <label class="w3-text-red"><b>작성자</b></label> </p>
+        <div class="w3-input w3-border"><%=id %></div>
       <p>
         <label class="w3-text-red"><b>내용</b></label>
         <textarea name="content" class="board-regist-ta" rows="10" cols="100" style="resize:none;"></textarea>

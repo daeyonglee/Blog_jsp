@@ -1,4 +1,8 @@
+<%@page import="kr.or.blog.board.domain.Article"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%
+	Article article = (Article)request.getAttribute("article");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,17 +28,17 @@
       <hr>
       <p>      
         <label class="w3-text-red"><b>글제목</b></label></p>
-        <div class="w3-input w3-border">안녕하세요3안녕하세요3안녕하세요3안녕하세요3안녕하세요3안녕하세요3안녕하세요3안녕하세요3안녕하세요3안녕하세요3안녕하세요3</div>
+        <div class="w3-input w3-border"><%= article.getSubject() %></div>
       <p>      
         <label class="w3-text-red"><b>작성자</b></label></p>
-        <div class="w3-input w3-border">이대용3</div>
+        <div class="w3-input w3-border"><%= article.getWriter() %></div>
       <p>
         <label class="w3-text-red"><b>내용</b></label></p>
-        <div class="w3-input w3-border">상세내용입니다.</div>
+        <div class="w3-input w3-border"><%= article.getContent() %></div>
       <p>      
-        <button class="w3-btn w3-red" onclick="JavaScript:location.href='list.jsp'">글목록</button>
-        <button class="w3-btn w3-red">답글쓰기</button>
-        <button class="w3-btn w3-red">글수정</button>
+        <a class="w3-btn w3-red" href="<%=application.getContextPath()%>/board/list.do">글목록</a>
+        <a class="w3-btn w3-red">답글쓰기</a>
+        <a class="w3-btn w3-red" onclick="">글수정</a>
       </p>
     </div>
   </div>

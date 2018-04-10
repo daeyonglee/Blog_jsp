@@ -23,14 +23,12 @@ public class BoardRegistController extends HttpServlet {
 	 ****************************************************************/
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String id = request.getParameter("id");
 		String subject = request.getParameter("subject");
 		String writer = request.getParameter("writer");
 		String content = request.getParameter("content");
 		String passwd = request.getParameter("passwd");
 		
 		Article article = new Article();
-		article.setWriter(id);
 		article.setSubject(subject);
 		article.setWriter(writer);
 		article.setContent(content);
@@ -39,6 +37,7 @@ public class BoardRegistController extends HttpServlet {
 		ArticleDao dao = (ArticleDao) DaoFactory.getInstance().getDao(JdbcArticleDao.class);
 		dao.create(article);
 		
+		response.sendRedirect(getServletContext().getContextPath()+"/board/list.do");
 	}
 	
 	public String getClientIP(HttpServletRequest request) {

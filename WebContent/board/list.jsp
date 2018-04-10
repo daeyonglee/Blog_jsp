@@ -70,7 +70,7 @@
       %> 
         <tr>
           <td><%= article.getArticleId() %></td>
-          <td><a class="board-detail-tt" href="detail.jsp"><%= article.getSubject() %></a></td>
+          <td><a class="board-detail-tt" href="<%= application.getContextPath()%>/board/detail.do?article_id=<%=article.getArticleId()%>"><%= article.getSubject() %></a></td>
           <td><%= article.getWriter() %></td>
           <td><%= article.getRegdate() %></td>
           <td><%= article.getHitcount()%></td>

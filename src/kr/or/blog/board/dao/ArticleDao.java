@@ -28,4 +28,6 @@ public interface ArticleDao {
 	public List<Article> listPage(Params params);
 	/** 페이지 수 조회 */
 	public int pageCount(Params param);
+	/** Hit 수 증가 */
+	public void updateHitCount(int articleId);
 }

@@ -53,26 +53,31 @@ public class JdbcArticleDao implements ArticleDao{
 				     "           , order_no" + 
 				     "           ) VALUES (" + 
 				     "             article_id_seq.nextval" + 
-				     "           , 1" + 
-				     "           , ?" + 
-				     "           , ?" + 
-				     "           , ?" + 
-				     "           , sysdate" + 
-				     "           , 0" + 
-				     "           , ?" + 
-				     "           , ?" + 
+				      "            , 1" + 
+				     "             , ?" + 
+				     "             , ?" + 
+				     "             , ?" + 
+                   "           , sysdate" + 
+				     "             , 0" + 
+				     "             , ?" + 
+				     "             , ?" + 
 				     "           , null" + 
-				     "           , 0" + 
-				     "           , 0" + 
-				     "           , 0" + 
+				     "           , article_id_seq.currval" + 
+				     "             , 0" + 
+				     "             , 0" + 
 				     "                     )";
 		try {
 			con = dataSource.getConnection();
 			con.setAutoCommit(false);
 			pstmt = con.prepareStatement(sql);
+
+			pstmt.setString(1, article.getWriter());
+			pstmt.setString(2, article.getSubject());
+			pstmt.setString(3, article.getContent());
+			pstmt.setString(4, article.getIp());
+			pstmt.setString(5, article.getPasswd());
 			
 			pstmt.executeUpdate();
-			
 			con.commit();
 			
 		} catch (Exception e) {
@@ -87,8 +92,43 @@ public class JdbcArticleDao implements ArticleDao{
 
 	@Override
 	public Article read(int articleId) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "SELECT article_id" + 
+					  "     , writer" + 
+					  "     , subject" + 
+					  "     , content" + 
+					  "     , regdate" + 
+					  "     , passwd" + 
+					  "     , group_no" + 
+					  "     , level_no" + 
+					  "     , order_no" + 
+					  "  FROM article" + 
+					  " WHERE article_id=?";
+		
+		Article article = new Article();
+		try {
+			con = dataSource.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, articleId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				article.setArticleId(rs.getInt("article_id"));
+				article.setWriter(rs.getString("writer"));
+				article.setSubject(rs.getString("subject"));
+				article.setContent(rs.getString("content"));
+				article.setRegdate(rs.getString("regdate"));
+				article.setPasswd(rs.getString("passwd"));
+				article.setGroupNo(rs.getInt("group_no"));
+				article.setLevelNo(rs.getInt("level_no"));
+				article.setOrderNo(rs.getInt("order_no"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("UserDao.listAll() : " + e.toString());
+		} finally {
+			close(rs, pstmt, con);
+		}
+		
+		return article;
 	}
 
 	@Override
@@ -249,6 +289,34 @@ public class JdbcArticleDao implements ArticleDao{
 		return count;
 	}
 	
+	/** Hit 수 증가 */
+	@Override
+	public void updateHitCount(int articleId) {
+		String sql = " UPDATE article" + 
+				      "    SET hitcount = hitcount + 1" + 
+				      "  WHERE article_id=?";
+		try {
+				con = dataSource.getConnection();
+				con.setAutoCommit(false);
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, articleId);
+				pstmt.executeUpdate();
+				
+				con.commit();
+				
+		} catch (Exception e) {
+			try {
+				e.printStackTrace();
+				con.rollback();
+				throw new RuntimeException("UserDao.listAll() : " + e.toString());
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			close(rs, pstmt, con);
+		}
+	}
+	
 	private void close(ResultSet rs, PreparedStatement pstmt, Connection con) {
 		try {
 			if (rs != null) rs.close();
@@ -262,9 +330,9 @@ public class JdbcArticleDao implements ArticleDao{
 	
 	public static void main(String[] args) {
 		ArticleDao dao = (ArticleDao) DaoFactory.getInstance().getDao(JdbcArticleDao.class);
-		List<Article> list = dao.listAll();
+		/*List<Article> list = dao.listAll();
 		for (Article article : list) {
 			System.out.println(article);
-		}
+		}*/
 	}
 }
