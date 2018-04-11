@@ -30,4 +30,6 @@ public interface ArticleDao {
 	public int pageCount(Params params);
 	/** Hit 수 증가 */
 	public void updateHitCount(int articleId);
+	/** 게시글의 답글의 순서번호 +1 */
+	public void updateRepOrderNo(int groupNo, int articleId);
 }

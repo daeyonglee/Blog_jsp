@@ -30,6 +30,7 @@
 <link rel="stylesheet" href="<%=application.getContextPath() %>/css/common.css">
 <link rel="stylesheet" href="<%=application.getContextPath() %>/css/aritcle.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <title>index</title>
 </head>
 <body class="w3-light-grey">
@@ -72,7 +73,16 @@
       %> 
         <tr>
           <td><%= article.getArticleId() %></td>
-          <td><a class="board-detail-tt" href="<%= application.getContextPath()%>/article/detail.do?article_id=<%=article.getArticleId()%>"><%= article.getSubject() %></a></td>
+          <td><a class="board-detail-tt" href="<%= application.getContextPath()%>/article/detail.do?article_id=<%=article.getArticleId()%>">
+          <%
+            for (int i=1; i<=article.getLevelNo(); i++) {
+          %>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+          <%    
+            }
+          %>
+          <i class="material-icons w3-spin">arrow_forward</i><%= article.getSubject() %>
+          </a></td>
           <td><%= article.getWriter() %></td>
           <td><%= article.getRegdate() %></td>
           <td><%= article.getHitcount()%></td>

@@ -1,3 +1,4 @@
+<%@page import="kr.or.blog.article.domain.Article"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
 String id = null;
@@ -11,6 +12,9 @@ if (cookies != null) {
     }
   }
 }
+%>
+<%
+  Article article = (Article)request.getAttribute("article");
 %>
 <!DOCTYPE html>
 <html>
@@ -39,7 +43,20 @@ if (cookies != null) {
       <hr>
       <p>      
         <label class="w3-text-red"><b>글제목</b></label>
+        <% if (article != null) {
+        %>
+        <input type="hidden" name="articleId" value="<%=article.getArticleId()%>">
+        <input type="hidden" name="groupNo" value="<%=article.getGroupNo() %>">
+        <input type="hidden" name="levelNo" value="<%=article.getLevelNo() %>">
+        <input type="hidden" name="orderNo" value="<%=article.getOrderNo() %>">
+        <input class="w3-input w3-border" name="subject" type="text" value='<%="[RE]"+article.getSubject() %>'>
+        <%	
+        } else {
+        %>
         <input class="w3-input w3-border" name="subject" type="text">
+        <% 
+        }
+        %>
         <span id="warning" class="warning"></span>
       </p>
       <p>      

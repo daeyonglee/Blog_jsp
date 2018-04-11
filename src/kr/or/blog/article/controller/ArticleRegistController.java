@@ -17,7 +17,25 @@ import kr.or.blog.common.dao.DaoFactory;
  */
 public class ArticleRegistController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    
+	/****************************************************************
+	 * 게시글 답글쓰기 시 article/regist.jsp로 이동                                                                              		*
+	 ****************************************************************/
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String articleId = request.getParameter("article_id");
+		
+		ArticleDao dao = (ArticleDao) DaoFactory.getInstance().getDao(JdbcArticleDao.class);
+		dao.updateHitCount(Integer.valueOf(articleId));
+		Article article = dao.read(Integer.valueOf(articleId));
+		request.setAttribute("article", article);
+		
+		if (article != null) {
+			request.getRequestDispatcher(getServletContext().getContextPath()+"/article/regist.jsp").forward(request, response);;
+		}
+	}
+	
 	/****************************************************************
 	 * 게시글 등록                                                                              		*
 	 ****************************************************************/
@@ -27,6 +45,19 @@ public class ArticleRegistController extends HttpServlet {
 		String writer = request.getParameter("writer");
 		String content = request.getParameter("content");
 		String passwd = request.getParameter("passwd");
+		String articleId = request.getParameter("articleId");
+		String groupNo = request.getParameter("groupNo");
+		String levelNo = request.getParameter("levelNo");
+		String orderNo = request.getParameter("orderNo");
+		
+		System.out.println(subject);
+		System.out.println(writer);
+		System.out.println(content);
+		System.out.println(passwd);
+		System.out.println(articleId);
+		System.out.println(groupNo);
+		System.out.println(levelNo);
+		System.out.println(orderNo);
 		
 		Article article = new Article();
 		article.setSubject(subject);
@@ -35,8 +66,20 @@ public class ArticleRegistController extends HttpServlet {
 		article.setIp(getClientIP(request));
 		article.setPasswd(passwd);
 		ArticleDao dao = (ArticleDao) DaoFactory.getInstance().getDao(JdbcArticleDao.class);
-		dao.create(article);
 		
+		// 답글쓰기
+		if (articleId != null) {
+			article.setGroupNo(Integer.valueOf(groupNo));
+			article.setLevelNo(Integer.valueOf(levelNo));
+			article.setOrderNo(Integer.valueOf(orderNo));
+			article.setArticleId(Integer.valueOf(articleId));
+			// 그룹번호와 레벨이 같은 데이터들의 order_no값을 +1
+			dao.updateRepOrderNo(article.getGroupNo(), article.getArticleId());
+		} 
+		
+		dao.create(article);
+		if (articleId != null) {
+		}
 		response.sendRedirect(getServletContext().getContextPath()+"/article/list.do");
 	}
 	

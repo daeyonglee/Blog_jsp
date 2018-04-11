@@ -26,9 +26,9 @@ public class ArticleDetailController extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+    /****************************************************************
+	 * 게시글 상세 보기                                                                      		*
+	 ****************************************************************/
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String articleId = request.getParameter("article_id");

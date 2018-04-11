@@ -77,4 +77,14 @@
     <servlet-name>ArticleDetailController</servlet-name>
     <url-pattern>/article/detail.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ArticleAttachListController</display-name>
+    <servlet-name>ArticleAttachListController</servlet-name>
+    <servlet-class>kr.or.blog.article.controller.ArticleAttachListController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ArticleAttachListController</servlet-name>
+    <url-pattern>/article/attachList.do</url-pattern>
+  </servlet-mapping>
 </web-app>

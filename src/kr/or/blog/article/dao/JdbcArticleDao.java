@@ -38,44 +38,74 @@ public class JdbcArticleDao implements ArticleDao{
 	@Override
 	public void create(Article article) {
 		String sql = "INSERT INTO article  (" + 
-				     "             article_id" + 
-				     "           , board_id" + 
-				     "           , writer" + 
-				     "           , subject" + 
-				     "           , content" + 
-				     "           , regdate" + 
-				     "           , hitcount" + 
-				     "           , ip" + 
-				     "           , passwd" + 
-				     "           , attach_file" + 
-				     "           , group_no" + 
-				     "           , level_no" + 
-				     "           , order_no" + 
-				     "           ) VALUES (" + 
-				     "             article_id_seq.nextval" + 
-				      "            , 1" + 
-				     "             , ?" + 
-				     "             , ?" + 
-				     "             , ?" + 
-                   "           , sysdate" + 
-				     "             , 0" + 
-				     "             , ?" + 
-				     "             , ?" + 
-				     "           , null" + 
-				     "           , article_id_seq.currval" + 
-				     "             , 0" + 
-				     "             , 0" + 
-				     "                     )";
+			         "             article_id" + 
+			         "           , board_id" + 
+			         "           , writer" + 
+			         "           , subject" + 
+			         "           , content" + 
+			         "           , regdate" + 
+			         "           , hitcount" + 
+			         "           , ip" + 
+			         "           , passwd" + 
+			         "           , attach_file" + 
+			         "           , group_no" + 
+			         "           , level_no" + 
+			         "           , order_no" + 
+			         "           ) VALUES (" +
+			         "             article_id_seq.nextval" +
+			         "           , 1" +
+			         "           , ?" +
+			         "           , ?" +
+			         "           , ?" +
+			         "           , sysdate" +
+			         "           , 0" +
+			         "           , ?" +
+			         "           , ?" +
+			         "           , null";
+			         
+		
+		if (article.getArticleId() != null) {
+			sql +=   "           , ?";
+			sql +=  "            , ?"; 
+			if (article.getLevelNo() != 0) {
+				sql +=	"            , (SELECT order_no + 1" + 
+						"                 FROM  article " + 
+						"                WHERE  article_id = ?)"; 
+			} else {
+				sql +=	"            , (SELECT MAX(order_no) + 1 " + 
+						"              FROM   article " + 
+						"              WHERE  board_id = 1 " + 
+						"                     AND group_no = ?)"; 
+			}
+			sql +=	"                     )";
+		} else {
+			sql +=  "           , article_id_seq.currval";
+			sql +=  "           , ?                     ";
+			sql +=  "           , ?                     ";
+			sql +=	"                      )";
+		}
+				     
 		try {
 			con = dataSource.getConnection();
 			con.setAutoCommit(false);
 			pstmt = con.prepareStatement(sql);
-
 			pstmt.setString(1, article.getWriter());
 			pstmt.setString(2, article.getSubject());
 			pstmt.setString(3, article.getContent());
 			pstmt.setString(4, article.getIp());
 			pstmt.setString(5, article.getPasswd());
+			if (article.getArticleId() != null) {
+				pstmt.setInt(6, article.getGroupNo());
+				pstmt.setInt(7, article.getLevelNo()+1);
+				if (article.getLevelNo() != 0) {
+					pstmt.setInt(8, article.getArticleId());
+				} else {
+					pstmt.setInt(8, article.getGroupNo());
+				}
+			} else {
+				pstmt.setInt(6, 0);
+				pstmt.setInt(7, 0);
+			}
 			
 			pstmt.executeUpdate();
 			con.commit();
@@ -207,6 +237,7 @@ public class JdbcArticleDao implements ArticleDao{
 				     "     , regdate " + 
 				     "     , ip      " + 
 				     "     , hitcount" + 
+				     "     , level_no" + 
 				     "  FROM (SELECT CEIL(rownum / 10) as page" + 
 				     "             , article_id " + 
 				     "             , subject " + 
@@ -214,12 +245,14 @@ public class JdbcArticleDao implements ArticleDao{
 				     "             , TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') regdate" + 
 				     "             , ip " + 
 				     "             , hitcount " + 
+				     "             , level_no " + 
 				     "          FROM (SELECT article_id " + 
 				     "                     , subject " + 
 				     "                     , writer " + 
 				     "                     , regdate " + 
 				     "                     , ip " + 
 				     "                     , hitcount " + 
+				     "                     , level_no " + 
 				     "                  FROM article " + 
 				     "                 WHERE board_id = 1  ";
 		      sql += "                 ORDER BY group_no DESC, " + 
@@ -243,6 +276,7 @@ public class JdbcArticleDao implements ArticleDao{
 				article.setRegdate(rs.getString("regdate"));
 				article.setHitcount(rs.getInt("hitcount"));
 				article.setIp(rs.getString("ip"));
+				article.setLevelNo(rs.getInt("level_no"));
 				list.add(article);
 			}
 		} catch (Exception e) {
@@ -265,6 +299,7 @@ public class JdbcArticleDao implements ArticleDao{
 			     "     , regdate " + 
 			     "     , ip      " + 
 			     "     , hitcount" + 
+			     "     , level_no" + 
 			     "  FROM (SELECT CEIL(rownum / 10) as page" + 
 			     "             , article_id " + 
 			     "             , subject " + 
@@ -272,12 +307,14 @@ public class JdbcArticleDao implements ArticleDao{
 			     "             , TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') regdate" + 
 			     "             , ip " + 
 			     "             , hitcount " + 
+			     "             , level_no " + 
 			     "          FROM (SELECT article_id " + 
 			     "                     , subject " + 
 			     "                     , writer " + 
 			     "                     , regdate " + 
 			     "                     , ip " + 
 			     "                     , hitcount " + 
+			     "                     , level_no " + 
 			     "                  FROM article " + 
 			     "                 WHERE board_id = 1  ";
 		  sql += "                   AND " + searchType + " LIKE ?";  
@@ -286,7 +323,6 @@ public class JdbcArticleDao implements ArticleDao{
 			     "               )" + 
 			     "        )" + 
 			     " WHERE page = ?";
-		 System.out.println(sql);
 		List<Article> list = new ArrayList<Article>();
 		try {
 			con = dataSource.getConnection();
@@ -303,6 +339,7 @@ public class JdbcArticleDao implements ArticleDao{
 				article.setRegdate(rs.getString("regdate"));
 				article.setHitcount(rs.getInt("hitcount"));
 				article.setIp(rs.getString("ip"));
+				article.setLevelNo(rs.getInt("level_no"));
 				list.add(article);
 			}
 		} catch (Exception e) {
@@ -377,6 +414,37 @@ public class JdbcArticleDao implements ArticleDao{
 		}
 	}
 	
+	@Override
+	public void updateRepOrderNo(int groupNo, int articleId) {
+		String sql = " UPDATE article" + 
+			      "    SET order_no = order_no + 1" + 
+			      "  WHERE group_no=?" +
+				  "    AND order_no > (SELECT order_no " + 
+				  "                      FROM article  " + 
+				  "                     WHERE article_id = ?)";
+		try {
+				con = dataSource.getConnection();
+				con.setAutoCommit(false);
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, groupNo);
+				pstmt.setInt(2, articleId);
+				pstmt.executeUpdate();
+				
+				con.commit();
+				
+		} catch (Exception e) {
+			try {
+				e.printStackTrace();
+				con.rollback();
+				throw new RuntimeException("ArticleDao.updateHitCount(int articleId) : " + e.toString());
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			close(rs, pstmt, con);
+		}
+	}
+	
 	private void close(ResultSet rs, PreparedStatement pstmt, Connection con) {
 		try {
 			if (rs != null) rs.close();
@@ -390,10 +458,10 @@ public class JdbcArticleDao implements ArticleDao{
 	
 	public static void main(String[] args) {
 		ArticleDao dao = (ArticleDao) DaoFactory.getInstance().getDao(JdbcArticleDao.class);
-		List<Article> list = dao.listPage(1, "subject","글쓰기");
+		List<Article> list = dao.listPage(1);
 		for (Article article : list) {
 			System.out.println(article);
 		}
-		System.out.println(dao.pageCount(new Params(0, "subject", "", 10, 0)));
+		System.out.println(dao.read(8202));
 	}
 }

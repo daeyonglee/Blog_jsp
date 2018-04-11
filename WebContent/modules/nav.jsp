@@ -15,7 +15,7 @@
   <a href="<%=application.getContextPath() %>/index.jsp" class="w3-bar-item w3-button">HOME</a>
   <a href="<%=application.getContextPath() %>/visitors/list.do" class="w3-bar-item w3-button">방명록</a>
   <a href="<%=application.getContextPath() %>/article/list.do" class="w3-bar-item w3-button">자유게시판</a>
-  <a href="<%=application.getContextPath() %>/files/list.jsp" class="w3-bar-item w3-button">자료실</a>
+  <a href="<%=application.getContextPath() %>/article/attachList.do" class="w3-bar-item w3-button">자료실</a>
   <%
   	if (user.getId() == null) {
   %>

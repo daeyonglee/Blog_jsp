@@ -31,10 +31,6 @@ public class ArticleListController extends HttpServlet {
 		String searchValue = request.getParameter("searchValue");
 		String pageSize = request.getParameter("pageSize");
 		
-		System.out.println(requestPage);
-		System.out.println(searchType);
-		System.out.println(searchValue);
-		System.out.println(pageSize);
 		
 		if ("".equals(searchType) || searchType == null) {
 			searchType = "subject";
@@ -68,7 +64,6 @@ public class ArticleListController extends HttpServlet {
 		if (endPage > params.getPageNum()) {
 			endPage = params.getPageNum();
 		}
-		System.out.println(params.getPageNum());
 		
 		request.setAttribute("page", page);
 		request.setAttribute("startPage", startPage);

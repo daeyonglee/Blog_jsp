@@ -2,6 +2,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
 	Article article = (Article)request.getAttribute("article");
+    request.setAttribute("article", article);
 %>
 <!DOCTYPE html>
 <html>
@@ -36,9 +37,14 @@
         <label class="w3-text-red"><b>내용</b></label></p>
         <div class="w3-input w3-border"><%= article.getContent() %></div>
       <p>      
+        <label class="w3-text-red"><b>비밀번호</b></label>
+        <div class="w3-cell"><input class="w3-input w3-border" name="passwd" type="password"></div>
+      <p>
+      <p>      
         <a class="w3-btn w3-red" href="<%=application.getContextPath()%>/article/list.do">글목록</a>
-        <a class="w3-btn w3-red">답글쓰기</a>
+        <a class="w3-btn w3-red" href="<%=application.getContextPath()%>/article/regist.do?article_id=<%=article.getArticleId()%>">답글쓰기</a>
         <a class="w3-btn w3-red" onclick="">글수정</a>
+        <a class="w3-btn w3-red" onclick="">글삭제</a>
       </p>
     </div>
   </div>
