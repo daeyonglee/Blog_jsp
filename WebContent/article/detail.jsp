@@ -1,4 +1,4 @@
-<%@page import="kr.or.blog.board.domain.Article"%>
+<%@page import="kr.or.blog.article.domain.Article"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
 	Article article = (Article)request.getAttribute("article");
@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="<%=application.getContextPath() %>/css/w3.css">
 <link rel="stylesheet" href="<%=application.getContextPath() %>/css/common.css">
-<link rel="stylesheet" href="<%=application.getContextPath() %>/css/board.css">
+<link rel="stylesheet" href="<%=application.getContextPath() %>/css/aritcle.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <title>index</title>
 </head>
@@ -36,7 +36,7 @@
         <label class="w3-text-red"><b>내용</b></label></p>
         <div class="w3-input w3-border"><%= article.getContent() %></div>
       <p>      
-        <a class="w3-btn w3-red" href="<%=application.getContextPath()%>/board/list.do">글목록</a>
+        <a class="w3-btn w3-red" href="<%=application.getContextPath()%>/article/list.do">글목록</a>
         <a class="w3-btn w3-red">답글쓰기</a>
         <a class="w3-btn w3-red" onclick="">글수정</a>
       </p>

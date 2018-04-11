@@ -49,32 +49,32 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>BoardListController</display-name>
-    <servlet-name>BoardListController</servlet-name>
-    <servlet-class>kr.or.blog.board.controller.BoardListController</servlet-class>
+    <display-name>ArticleListController</display-name>
+    <servlet-name>ArticleListController</servlet-name>
+    <servlet-class>kr.or.blog.article.controller.ArticleListController</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>BoardListController</servlet-name>
-    <url-pattern>/board/list.do</url-pattern>
+    <servlet-name>ArticleListController</servlet-name>
+    <url-pattern>/article/list.do</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>BoardRegistController</display-name>
-    <servlet-name>BoardRegistController</servlet-name>
-    <servlet-class>kr.or.blog.board.controller.BoardRegistController</servlet-class>
+    <display-name>ArticleRegistController</display-name>
+    <servlet-name>ArticleRegistController</servlet-name>
+    <servlet-class>kr.or.blog.article.controller.ArticleRegistController</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>BoardRegistController</servlet-name>
-    <url-pattern>/board/regist.do</url-pattern>
+    <servlet-name>ArticleRegistController</servlet-name>
+    <url-pattern>/article/regist.do</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>BoardDetailController</display-name>
-    <servlet-name>BoardDetailController</servlet-name>
-    <servlet-class>kr.or.blog.board.controller.BoardDetailController</servlet-class>
+    <display-name>ArticleDetailController</display-name>
+    <servlet-name>ArticleDetailController</servlet-name>
+    <servlet-class>kr.or.blog.article.controller.ArticleDetailController</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>BoardDetailController</servlet-name>
-    <url-pattern>/board/detail.do</url-pattern>
+    <servlet-name>ArticleDetailController</servlet-name>
+    <url-pattern>/article/detail.do</url-pattern>
   </servlet-mapping>
 </web-app>

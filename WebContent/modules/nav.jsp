@@ -14,12 +14,12 @@
 <div class="w3-bar w3-black w3-hide-small">
   <a href="<%=application.getContextPath() %>/index.jsp" class="w3-bar-item w3-button">HOME</a>
   <a href="<%=application.getContextPath() %>/visitors/list.do" class="w3-bar-item w3-button">방명록</a>
-  <a href="<%=application.getContextPath() %>/board/list.do" class="w3-bar-item w3-button">자유게시판</a>
+  <a href="<%=application.getContextPath() %>/article/list.do" class="w3-bar-item w3-button">자유게시판</a>
   <a href="<%=application.getContextPath() %>/files/list.jsp" class="w3-bar-item w3-button">자료실</a>
   <%
   	if (user.getId() == null) {
   %>
-  <button onclick="document.getElementById('login').style.display='block'" class="w3-button w3-hover w3-border-white w3-hover-border-black w3-right">로그인</button>
+  <button onclick="document.getElementById('login').style.display='block'; document.getElementsByName('id')[0].focus()" class="w3-button w3-hover w3-border-white w3-hover-border-black w3-right">로그인</button>
   <%		
   	} else {
   %>

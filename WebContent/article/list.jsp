@@ -1,5 +1,5 @@
-<%@ page import="kr.or.blog.board.domain.Params"%>
-<%@ page import="kr.or.blog.board.domain.Article"%>
+<%@page import="kr.or.blog.article.domain.Params"%>
+<%@page import="kr.or.blog.article.domain.Article"%>
 <%@ page import="java.util.List"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
@@ -28,7 +28,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="<%=application.getContextPath() %>/css/w3.css">
 <link rel="stylesheet" href="<%=application.getContextPath() %>/css/common.css">
-<link rel="stylesheet" href="<%=application.getContextPath() %>/css/board.css">
+<link rel="stylesheet" href="<%=application.getContextPath() %>/css/aritcle.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <title>index</title>
 </head>
@@ -49,13 +49,15 @@
       <%    
         }
       %>
-      <select class="board-select w3-border">
-        <option>글제목</option>
-        <option>글내용</option>
-        <option>작성자</option>
-      </select>
-      <input type="text" class="board-search w3-white" placeholder="Search..">
-      <a href="#" class="w3-button w3-red">검색</a>
+      <form action="<%=application.getContextPath() %>/article/list.do" method="get">
+        <select name="searchType" class="board-select w3-border">
+          <option value="subject">글제목</option>
+          <option value="content">글내용</option>
+          <option value="writer">작성자</option>
+        </select>
+        <input type="text" name="searchValue" class="board-search w3-white" placeholder="Search.." />
+        <input type="submit" class="w3-button w3-red" value="검색" />
+      </form>
     </div>
     <table class="w3-table-all w3-striped">
       <tr class="w3-red">
@@ -70,7 +72,7 @@
       %> 
         <tr>
           <td><%= article.getArticleId() %></td>
-          <td><a class="board-detail-tt" href="<%= application.getContextPath()%>/board/detail.do?article_id=<%=article.getArticleId()%>"><%= article.getSubject() %></a></td>
+          <td><a class="board-detail-tt" href="<%= application.getContextPath()%>/article/detail.do?article_id=<%=article.getArticleId()%>"><%= article.getSubject() %></a></td>
           <td><%= article.getWriter() %></td>
           <td><%= article.getRegdate() %></td>
           <td><%= article.getHitcount()%></td>
@@ -83,15 +85,15 @@
     <div class="w3-container">
       <div class="w3-center">
         <div class="w3-bar w3-border">
-            <a href="<%=application.getContextPath() %>/board/list.do?page=1" class="w3-bar-item w3-button">&laquo;&laquo;</a>
+            <a href="<%=application.getContextPath() %>/article/list.do?page=1" class="w3-bar-item w3-button">&laquo;&laquo;</a>
             <%
               if (startPage == 1) {
             %>
-            <a href="<%=application.getContextPath() %>/board/list.do?page=1" class="w3-bar-item w3-button">&laquo;</a>
+            <a href="<%=application.getContextPath() %>/article/list.do?page=1" class="w3-bar-item w3-button">&laquo;</a>
             <%	  
               } else {
             %>
-            <a href="<%=application.getContextPath() %>/board/list.do?page=<%=startPage-10 %>" class="w3-bar-item w3-button">&laquo;</a>
+            <a href="<%=application.getContextPath() %>/article/list.do?page=<%=startPage-10 %>" class="w3-bar-item w3-button">&laquo;</a>
             <%   
               }
             %>
@@ -100,11 +102,11 @@
                 for (int i=startPage; i<=endPage; i++) {
                   if (i == curPage) {
             %>
-              <a href="<%=application.getContextPath() %>/board/list.do?page=<%=i %>&" class="w3-bar-item w3-button w3-red"><%=i%></a>
+              <a href="<%=application.getContextPath() %>/article/list.do?page=<%=i %>&" class="w3-bar-item w3-button w3-red"><%=i%></a>
             <%        
                   } else {
             %>
-              <a href="<%=application.getContextPath() %>/board/list.do?page=<%=i %>" class="w3-bar-item w3-button"><%=i%></a>
+              <a href="<%=application.getContextPath() %>/article/list.do?page=<%=i %>" class="w3-bar-item w3-button"><%=i%></a>
             <%       
                   }
                 }
@@ -114,8 +116,18 @@
             <%         	  
               }
             %>
-            <a href="<%=application.getContextPath() %>/board/list.do?page=<%=startPage+10 %>" class="w3-bar-item w3-button">&raquo;</a>
-            <a href="<%=application.getContextPath() %>/board/list.do?page=<%=params.getPageNum() %>" class="w3-bar-item w3-button">&raquo;&raquo;</a>
+            <%
+              if (endPage == params.getPageNum()) {
+            %>
+            <a href="<%=application.getContextPath() %>/article/list.do?page=<%=endPage %>" class="w3-bar-item w3-button">&raquo;</a>
+            <%    
+              } else {
+            %>
+            <a href="<%=application.getContextPath() %>/article/list.do?page=<%=startPage+10 %>" class="w3-bar-item w3-button">&raquo;</a>
+            <%  
+              }
+            %>
+            <a href="<%=application.getContextPath() %>/article/list.do?page=<%=params.getPageNum() %>" class="w3-bar-item w3-button">&raquo;&raquo;</a>
         </div>
       </div>
     </div>
