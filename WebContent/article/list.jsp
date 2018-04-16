@@ -81,7 +81,14 @@
           <%    
             }
           %>
-          <i class="material-icons w3-spin">arrow_forward</i><%= article.getSubject() %>
+          <%
+             if (article.getLevelNo() != 0) {
+          %>
+          <i class="material-icons w3-spin">arrow_forward</i>
+          <%     
+             }
+          %>
+          <%= article.getSubject() %>
           </a></td>
           <td><%= article.getWriter() %></td>
           <td><%= article.getRegdate() %></td>

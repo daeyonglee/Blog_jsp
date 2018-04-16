@@ -61,7 +61,7 @@
 	  <div class="w3-card-4 w3-margin w3-white">
 	    
 	    <div class="w3-container">
-	      <h5><span class="w3-opacity"><%=guestBook.getRegdate() %></span></h5>
+	      <h5><span class="w3-opacity"><%=guestBook.getRegdate() %>&nbsp;&nbsp;&nbsp;&nbsp;<%=guestBook.getUserId() %></span></h5>
 	    </div>
 	
 	    <div class="w3-container">

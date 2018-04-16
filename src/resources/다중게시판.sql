@@ -52,7 +52,7 @@ CREATE TABLE article(
   hitcount      NUMBER(5)        DEFAULT 0 NOT NULL,         -- 게시글 조회수
   ip	          VARCHAR2(20)     NOT NULL,                   -- 작성자 아이피
   passwd        VARCHAR2(8)      NOT NULL,                   -- 게시글 비밀번호
-  attach_file   VARCHAR2(20),                                -- 첨부파일
+  attach_file   VARCHAR2(100),                                -- 첨부파일
   group_no      NUMBER(7)        NOT NULL,                   -- 계층형 게시판 구조를 위한 게시글 그룹번호
   level_no      NUMBER(2)        NOT NULL,                   -- 계층형 게시판 구조를 위한 그룹내 게시글 레벨
   order_no      NUMBER(3)        NOT NULL                    -- 계층형 게시판 구조를 위한 그룹내 게시글 순서

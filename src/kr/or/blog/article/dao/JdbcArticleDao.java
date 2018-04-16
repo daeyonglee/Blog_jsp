@@ -1,5 +1,6 @@
 package kr.or.blog.article.dao;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -169,6 +170,64 @@ public class JdbcArticleDao implements ArticleDao{
 		
 	}
 
+	/** Attach_File 생성*/
+	@Override
+	public void createAttachFile(Article article) {
+		String sql  = " INSERT INTO article ";
+		       sql += "        (";
+		       sql += "          article_id";
+		       sql += "        , board_id";
+		       sql += "        , writer";
+		       sql += "        , subject";
+		       sql += "        , content";
+		       sql += "        , hitcount";
+		       sql += "        , ip";
+		       sql += "        , passwd";
+		       sql += "        , attach_file";
+		       sql += "        , group_no";
+		       sql += "        , level_no";
+		       sql += "        , order_no";
+		       sql += "        ) VALUES (";
+		       sql += "          article_id_seq.nextval";
+		       sql += "        , 2";
+		       sql += "        , ?";
+		       sql += "        , ?";
+		       sql += "        , ?";
+		       sql += "        , 0";
+		       sql += "        , ?";
+		       sql += "        , 0";
+		       sql += "        , ?";
+		       sql += "        , 0";
+		       sql += "        , 0";
+		       sql += "        , 0";
+		       sql += "        )";
+		try {
+				con = dataSource.getConnection();
+				con.setAutoCommit(false);
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, article.getWriter());
+				pstmt.setString(2, " ");
+				pstmt.setString(3, " ");
+				pstmt.setString(4, article.getIp());
+				pstmt.setString(5, article.getAttachFile());
+				pstmt.executeUpdate();
+				
+				con.commit();
+				
+		} catch (Exception e) {
+			try {
+				e.printStackTrace();
+				con.rollback();
+				throw new RuntimeException("createAttachFile(Article article) : " + e.toString());
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			close(rs, pstmt, con);
+		}
+			
+	}
+	
 	@Override
 	public void delete(int articleId) {
 		// TODO Auto-generated method stub
@@ -225,7 +284,6 @@ public class JdbcArticleDao implements ArticleDao{
 		}
 			
 		return list;
-		
 	}
 
 	/** 해당 페이지의 게시글 조회 */
@@ -458,10 +516,66 @@ public class JdbcArticleDao implements ArticleDao{
 	
 	public static void main(String[] args) {
 		ArticleDao dao = (ArticleDao) DaoFactory.getInstance().getDao(JdbcArticleDao.class);
-		List<Article> list = dao.listPage(1);
+		List<Article> list = dao.listAll();
+		
+		String fileDirectory = "G:\\kosta\\files\\";
 		for (Article article : list) {
-			System.out.println(article);
+			File file = new File(fileDirectory+article.getAttachFile());
+			if (file.exists()) {
+				System.out.println(file.length()/1000+"KB");
+			}
 		}
-		System.out.println(dao.read(8202));
+	}
+	
+	/**  */
+	@Override
+	public List<Article> attachListAll() {
+		String sql = "SELECT article_id" + 
+			     "     , board_id" + 
+			     "     , writer" + 
+			     "     , subject" + 
+			     "     , content" + 
+			     "     , TO_CHAR(regdate, 'YYYY-MM-DD') as regdate" + 
+			     "     , hitcount" + 
+			     "     , ip" + 
+			     "     , passwd" + 
+			     "     , attach_file" + 
+			     "     , group_no" + 
+			     "     , level_no" + 
+			     "     , order_no" + 
+			     "  FROM article" +
+			     " WHERE board_id = 2" +
+			     " ORDER BY article_id desc";
+
+	List<Article> list = new ArrayList<Article>();
+	try {
+		con = dataSource.getConnection();
+		pstmt = con.prepareStatement(sql);
+		rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Article article = new Article();
+			article.setArticleId(rs.getInt("article_id"));
+			article.setBoardId(rs.getInt("board_id"));
+			article.setWriter(rs.getString("writer"));
+			article.setSubject(rs.getString("subject"));
+			article.setContent(rs.getString("content"));
+			article.setRegdate(rs.getString("regdate"));
+			article.setHitcount(rs.getInt("hitcount"));
+			article.setIp(rs.getString("ip"));
+			article.setPasswd(rs.getString("passwd"));
+			article.setAttachFile(rs.getString("attach_file"));
+			article.setGroupNo(rs.getInt("group_no"));
+			article.setLevelNo(rs.getInt("level_no"));
+			article.setOrderNo(rs.getInt("order_no"));
+			list.add(article);
+		}
+	} catch (Exception e) {
+		throw new RuntimeException("ArticleDao.listAll() : " + e.toString());
+	} finally {
+		close(rs, pstmt, con);
+	}
+		
+	return list;
 	}
 }

@@ -1,4 +1,10 @@
+<%@page import="java.util.Map"%>
+<%@page import="kr.or.blog.article.domain.Article"%>
+<%@page import="java.util.List"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%
+  List<Map<String, Object>> list = (List<Map<String, Object>>)request.getAttribute("list");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,47 +25,33 @@
   <!-- Blog entry -->
   <div class="w3-card-4 w3-margin w3-white">
     <div class="w3-container" style="margin-bottom: 10px;">
-      <a href="regist.jsp" class="w3-button w3-right w3-red board-regist-btn">글쓰기</a>
-      <select class="board-select w3-border">
-        <option>글제목</option>
-        <option>글내용</option>
-        <option>작성자</option>
-      </select>
-      <input type="text" class="board-search w3-white" placeholder="Search..">
-      <a href="#" class="w3-button w3-red">검색</a>
+      <a href="<%=application.getContextPath()%>/article/attachUpload.jsp" class="w3-button w3-right w3-red board-regist-btn">파일업로드</a>
     </div>
     <table class="w3-table-all w3-striped">
       <tr class="w3-red">
         <th>번호</th>
-        <th>제목</th>
+        <th>파일명</th>
+        <th>파일크기</th>
         <th>작성자</th>
-        <th>작성일</th>
-        <th>조회</th>
+        <th>다운로드</th>
       </tr>
+      <%
+        for (Map<String, Object> map : list) {
+          Article article = (Article)map.get("article");
+      %>
       <tr>
-        <td>3</td>
-        <td>안녕하세요3안녕하세요3안녕하세요3안녕하세요3안녕하세요3안녕하세요3안녕하세요3안녕하세요3안녕하세요3안녕하세요3안녕하세요3</td>
-        <td>이대용3</td>
-        <td>2018-04-06</td>
-        <td>11</td>
+        <td><%=article.getArticleId() %></td>
+        <td><%=article.getAttachFile() %></td>
+        <td><%=map.get("fileSize") %></td>
+        <td><%=article.getWriter() %></td>
+        <td><a class="w3-button w3-black board-regist-btn" href="<%=application.getContextPath()%>/article/attachDownload.do?file=<%=article.getAttachFile()%>">다운로드</a></td>
       </tr>
-      <tr>
-        <td>2</td>
-        <td>안녕하세요</td>
-        <td>이대용2</td>
-        <td>2018-04-06</td>
-        <td>11</td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>안녕하세요1</td>
-        <td>이대용</td>
-        <td>2018-04-06</td>
-        <td>11</td>
-      </tr>
+      <%    
+        }
+      %>
     </table>
     <hr>
-    <div class="w3-container">
+    <!-- <div class="w3-container">
       <div class="w3-center">
         <div class="w3-bar w3-border">
             <a href="#" class="w3-bar-item w3-button">&laquo;&laquo;</a>
@@ -72,7 +64,7 @@
             <a href="#" class="w3-bar-item w3-button">&raquo;&raquo;</a>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
 

@@ -14,9 +14,6 @@ import kr.or.blog.article.domain.Article;
 import kr.or.blog.article.domain.Params;
 import kr.or.blog.common.dao.DaoFactory;
 
-/**
- * Servlet implementation class BoardListController
- */
 public class ArticleListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -72,13 +69,5 @@ public class ArticleListController extends HttpServlet {
 		request.setAttribute("params", params);
 		
 		request.getRequestDispatcher(getServletContext().getContextPath()+"/article/list.jsp").forward(request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 }

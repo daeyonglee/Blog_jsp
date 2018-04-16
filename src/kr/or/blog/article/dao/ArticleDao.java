@@ -14,8 +14,12 @@ public interface ArticleDao {
 
 	/** 게시글 생성 */
 	public void create(Article article);
+	/** Attach_File 생성*/
+	public void createAttachFile(Article article);
 	/** 게시글 조회 */
 	public Article read(int articleId);
+	/** 자료실 전체 조회*/
+	public List<Article> attachListAll();
 	/** 게시글 수정 */
 	public void update(Article article);
 	/** 게시글 삭제 */

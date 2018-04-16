@@ -50,14 +50,6 @@ public class ArticleRegistController extends HttpServlet {
 		String levelNo = request.getParameter("levelNo");
 		String orderNo = request.getParameter("orderNo");
 		
-		System.out.println(subject);
-		System.out.println(writer);
-		System.out.println(content);
-		System.out.println(passwd);
-		System.out.println(articleId);
-		System.out.println(groupNo);
-		System.out.println(levelNo);
-		System.out.println(orderNo);
 		
 		Article article = new Article();
 		article.setSubject(subject);
@@ -78,8 +70,7 @@ public class ArticleRegistController extends HttpServlet {
 		} 
 		
 		dao.create(article);
-		if (articleId != null) {
-		}
+	
 		response.sendRedirect(getServletContext().getContextPath()+"/article/list.do");
 	}
 	

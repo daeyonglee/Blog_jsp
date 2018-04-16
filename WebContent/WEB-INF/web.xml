@@ -17,6 +17,10 @@
     <error-code>500</error-code>
     <location>/errors/500.jsp</location>
   </error-page>
+  <context-param>
+    <param-name>fileDirectory</param-name>
+    <param-value>G:\kosta\files\</param-value>
+  </context-param>
   <servlet>
     <description></description>
     <display-name>LoginController</display-name>
@@ -86,5 +90,25 @@
   <servlet-mapping>
     <servlet-name>ArticleAttachListController</servlet-name>
     <url-pattern>/article/attachList.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ArticleAttachDownController</display-name>
+    <servlet-name>ArticleAttachDownController</servlet-name>
+    <servlet-class>kr.or.blog.article.controller.ArticleAttachDownController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ArticleAttachDownController</servlet-name>
+    <url-pattern>/article/attachDownload.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ArticleAttachUpController</display-name>
+    <servlet-name>ArticleAttachUpController</servlet-name>
+    <servlet-class>kr.or.blog.article.controller.ArticleAttachUpController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ArticleAttachUpController</servlet-name>
+    <url-pattern>/article/attachUpload.do</url-pattern>
   </servlet-mapping>
 </web-app>
